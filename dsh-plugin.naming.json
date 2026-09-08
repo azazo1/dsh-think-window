@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "policy": "dsh-plugin-naming/v1",
+  "plugin": {
+    "namespace": "azazo1",
+    "name": "think-window",
+    "coordinate": "azazo1/think-window",
+    "packageName": "dsh-think-window"
+  },
+  "names": {
+    "pluginNames": ["dsh-think-window"],
+    "loaderIds": ["dsh-think-window"],
+    "services": [],
+    "tools": [],
+    "commands": [],
+    "skills": [],
+    "skillProviders": [],
+    "events": [],
+    "settingsNamespaces": ["dsh-think-window"],
+    "routes": []
+  }
+}

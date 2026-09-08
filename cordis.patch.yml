@@ -1,0 +1,13 @@
+# dsh-think-window bundle patch
+#
+# Inserts the plugin row into the web profile roster. The row runs the host
+# half (exports ".") in the host process and the browser half (exports
+# "./client") in the web GUI.
+#
+# Row config:
+#   lines   think-window height in lines (default 10). 0 disables the cap.
+- insert:
+    - id: dsh-think-window
+      name: 'dsh-think-window'
+      config:
+        lines: 10
