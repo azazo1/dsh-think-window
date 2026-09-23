@@ -6,7 +6,7 @@
  */
 import type { Context } from '@deepseek-ai/cordis'
 import z from '@deepseek-ai/schemastery'
-import type {} from '@deepseek-ai/dsh-settings'
+import type { Volatile } from '@deepseek-ai/cordis'
 import {
   DEFAULT_LINES, MAX_LINES, MIN_LINES, PLUGIN_NAME, SETTINGS_NAMESPACE,
   type ThinkWindowSettings,
@@ -16,9 +16,13 @@ export const name = PLUGIN_NAME
 
 export type Config = ThinkWindowSettings
 
+export interface ThinkWindowConfig {
+  lines: Volatile<number>
+}
+
 /** Loader / settings 共用的窗口 schema. */
-export const Config: z<ThinkWindowSettings> = z.object({
-  lines: z.number().step(1).min(MIN_LINES).max(MAX_LINES).default(DEFAULT_LINES),
+export const Config = z.object({
+  lines: z.number().step(1).min(MIN_LINES).max(MAX_LINES).default(DEFAULT_LINES).volatile(),
 })
 
 /**
@@ -26,32 +30,9 @@ export const Config: z<ThinkWindowSettings> = z.object({
  * @param ctx - Host 插件上下文.
  * @param config - Loader 校验后的行配置, 缺省时使用 schema 默认值.
  */
-export function apply(ctx: Context, config?: ThinkWindowSettings): void {
-  const resolved = Config(config)
+export function apply(ctx: Context, config: ThinkWindowConfig): void {
   ctx.logger.info(
     'dsh-think-window: host loaded, default lines=%d',
-    resolved.lines,
+    config.lines.get(),
   )
-
-  ctx.inject(['settings'], (settingsCtx) => {
-    let source = (): ThinkWindowSettings => resolved
-    settingsCtx.settings.installSection(
-      ctx,
-      SETTINGS_NAMESPACE,
-      Config,
-      resolved,
-      {
-        setSource: (current) => {
-          source = current
-        },
-        onChange: () => {
-          const next = source()
-          settingsCtx.logger.info(
-            'dsh-think-window: settings lines=%d',
-            next.lines,
-          )
-        },
-      },
-    )
-  })
 }

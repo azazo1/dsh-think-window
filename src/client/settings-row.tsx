@@ -1,9 +1,9 @@
 import { useSyncExternalStore, type ChangeEvent } from 'react'
+import type { ConfigForm as SettingsScope } from '@deepseek-ai/dsh-client-ui-settings/client'
 import {
   DEFAULT_LINES, LINES_FIELD, MAX_LINES, MIN_LINES, clampLines,
   type ThinkWindowSettings,
 } from '../shared.ts'
-import type { SettingsScope } from './scope.ts'
 
 export interface ThinkWindowSettingsRowProps {
   /** 已绑定的 settings scope. */

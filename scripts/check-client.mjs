@@ -48,7 +48,7 @@ const exports = handoff.factory((spec) => {
 if (typeof exports.apply !== 'function') {
   throw new Error('factory did not export apply')
 }
-if (!Array.isArray(exports.inject) || !exports.inject.includes('slots') || !exports.inject.includes('settingsScope')) {
+if (!Array.isArray(exports.inject) || !exports.inject.includes('slots') || !exports.inject.includes('configForms')) {
   throw new Error(`unexpected inject: ${JSON.stringify(exports.inject)}`)
 }
 
