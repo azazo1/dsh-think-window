@@ -4,8 +4,8 @@ export const PLUGIN_ID = 'dsh-think-window'
 /** Host Cordis 插件名. */
 export const PLUGIN_NAME = PLUGIN_ID
 
-/** 持久化 settings 命名空间, 与插件名一致. */
-export const SETTINGS_NAMESPACE = PLUGIN_ID
+/** profile 条目 id: configForms 表单按它寻址, 与包名一致. */
+export const ENTRY_ID = PLUGIN_ID
 
 /** 窗口高度字段名. */
 export const LINES_FIELD = 'lines'
@@ -38,31 +38,6 @@ export const LINES_VAR = '--dsh-think-window-lines'
 export interface ThinkWindowSettings {
   /** 展开后的思维链块限高行数. `0` 表示不限高. */
   lines: number
-}
-
-/**
- * 把未知值夹到合法行数.
- * @param value - 用户输入或 settings 原始值.
- * @returns 夹紧后的整数行数.
- */
-export function clampLines(value: unknown): number {
-  const n = typeof value === 'number' ? value : Number(value)
-  if (!Number.isFinite(n)) return DEFAULT_LINES
-  return Math.min(MAX_LINES, Math.max(MIN_LINES, Math.round(n)))
-}
-
-/**
- * 把 Host 返回的未知 section 解码成类型化设置.
- * 非对象返回 `undefined`, 保留上一次已接受值; 对象字段异常则回退默认行数.
- * @param section - settings namespace 的原始 section.
- * @returns 解码后的设置, 或 `undefined`.
- */
-export function decodeThinkWindowSettings(
-  section: unknown,
-): ThinkWindowSettings | undefined {
-  if (typeof section !== 'object' || section === null) return undefined
-  const lines = (section as Record<string, unknown>)[LINES_FIELD]
-  return { lines: clampLines(lines) }
 }
 
 /**

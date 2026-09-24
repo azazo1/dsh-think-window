@@ -40,16 +40,30 @@ if (handoff.id !== pluginId) {
 }
 
 const require = createRequire(import.meta.url)
+// 平台模块表里的依赖: 运行时由 loader 的 require 提供. react 用本机安装的同一份顶替,
+// 界面控件这里只要形状存在即可 — 本脚本校验的是 loader 注册, 真实挂载在运行中的 web 实例里验证.
+const componentStub = () => null
+const platformModules = new Map([
+  ['react', () => require('react')],
+  ['react/jsx-runtime', () => require('react/jsx-runtime')],
+  ['@deepseek-ai/dsh-client-ui-primitives', () => ({
+    SettingsForm: componentStub,
+    SettingsValueField: componentStub,
+  })],
+])
 const exports = handoff.factory((spec) => {
-  if (spec === 'react' || spec === 'react/jsx-runtime') return require(spec)
-  throw new Error(`unexpected require: ${spec}`)
+  const load = platformModules.get(spec)
+  if (load === undefined) throw new Error(`unexpected require: ${spec}`)
+  return load()
 })
 
 if (typeof exports.apply !== 'function') {
   throw new Error('factory did not export apply')
 }
-if (!Array.isArray(exports.inject) || !exports.inject.includes('slots') || !exports.inject.includes('configForms')) {
-  throw new Error(`unexpected inject: ${JSON.stringify(exports.inject)}`)
+for (const service of ['slots', 'locale', 'configForms']) {
+  if (!Array.isArray(exports.inject) || !exports.inject.includes(service)) {
+    throw new Error(`unexpected inject: ${JSON.stringify(exports.inject)}`)
+  }
 }
 
 console.log('dsh-think-window: client loader registration ok')

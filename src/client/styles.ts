@@ -16,116 +16,6 @@ html[${CAPPED_ATTR}="1"] [data-variant="think"][data-expanded] [data-open] > :no
   overflow-y: auto;
   overscroll-behavior: contain;
 }
-
-.dtw-set-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  width: 100%;
-  padding: 16px 0;
-  border-bottom: 1px solid var(--dsw-alias-border-l2);
-}
-
-.dtw-set-text {
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  padding-right: 48px;
-}
-
-.dtw-set-title {
-  color: var(--dsw-alias-label-primary);
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 22px;
-}
-
-.dtw-set-desc {
-  color: var(--dsw-alias-label-tertiary);
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 18px;
-}
-
-.dtw-set-control {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex: none;
-}
-
-.dtw-set-btn {
-  height: 36px;
-  min-width: 36px;
-  padding: 0 10px;
-  border: none;
-  border-radius: 18px;
-  background: var(--dsw-alias-bg-module-platform);
-  color: var(--dsw-alias-label-primary);
-  font-size: 16px;
-  line-height: 1;
-  cursor: pointer;
-}
-
-.dtw-set-btn:hover:not(:disabled) {
-  background: var(--dsw-alias-interactive-bg-hover);
-}
-
-.dtw-set-btn:focus-visible {
-  outline: 2px solid var(--dsw-alias-brand-primary);
-  outline-offset: 2px;
-}
-
-.dtw-set-btn:disabled {
-  color: var(--dsw-alias-label-caption);
-  cursor: default;
-}
-
-.dtw-set-input {
-  width: 64px;
-  height: 36px;
-  padding: 0 12px;
-  text-align: center;
-  border: none;
-  border-radius: 18px;
-  background: var(--dsw-alias-bg-module-platform);
-  color: var(--dsw-alias-label-primary);
-  font-size: 14px;
-  line-height: 22px;
-  font-variant-numeric: tabular-nums;
-}
-
-.dtw-set-input:hover {
-  background: var(--dsw-alias-interactive-bg-hover);
-}
-
-.dtw-set-input:focus,
-.dtw-set-input:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 2px var(--dsw-alias-brand-primary);
-}
-
-@media (max-width: 640px) {
-  .dtw-set-row {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .dtw-set-text {
-    padding-right: 0;
-  }
-
-  .dtw-set-control {
-    width: 100%;
-  }
-
-  .dtw-set-input {
-    flex: 1;
-    width: 100%;
-  }
-}
 `.trim()
 
 /**
@@ -142,7 +32,7 @@ export function injectStyles(): void {
 
 /**
  * 把当前窗口行数写到文档根, 已渲染的 Think 块立即改高度.
- * @param lines - 夹紧后的行数, `0` 关闭限高.
+ * @param lines - 当前行数, `0` 关闭限高.
  */
 export function applyWindowLines(lines: number): void {
   if (typeof document === 'undefined') return

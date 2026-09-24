@@ -4,10 +4,13 @@
 # half (exports ".") in the host process and the browser half (exports
 # "./client") in the web GUI.
 #
-# Row config:
-#   lines   think-window height in lines (default 10). 0 disables the cap.
+# The row carries no config: the window height default and its range live in
+# the host schema, and the Plugins page row configuration is where it is
+# edited. A later patch layer overrides it by id:
+#
+#   - id: dsh-think-window
+#     config:
+#       lines: 10
 - insert:
     - id: dsh-think-window
       name: 'dsh-think-window'
-      config:
-        lines: 10

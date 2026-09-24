@@ -13,7 +13,14 @@ export default defineConfig({
   target: 'es2022',
   fixedExtension: false,
   deps: {
-    neverBundle: ['react', 'react/jsx-runtime', 'react-dom', '@deepseek-ai/cordis'],
+    // 平台模块表里的模块: 运行时由 loader 的 require 提供, 不打进本 bundle.
+    neverBundle: [
+      'react',
+      'react/jsx-runtime',
+      'react-dom',
+      '@deepseek-ai/cordis',
+      '@deepseek-ai/dsh-client-ui-primitives',
+    ],
   },
   outputOptions: {
     entryFileNames: 'client.js',

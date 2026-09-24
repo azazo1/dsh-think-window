@@ -13,14 +13,14 @@ type Config = ThinkWindowSettings;
 interface ThinkWindowConfig {
   lines: Volatile<number>;
 }
-/** Loader / settings 共用的窗口 schema. */
+/** Loader / 插件页表单共用的窗口 schema. */
 declare const Config: z<Schemastery.ObjectS<NoInfer<{
   lines: z<number, number, "volatile-defined">;
 }>>, Schemastery.ObjectT<NoInfer<{
   lines: z<number, number, "volatile-defined">;
 }>>, "plain">;
 /**
- * 在 settings 服务可用时挂上命名空间, 并把 cordis.yml 行配置作为 composition 底.
+ * 报告一次装配结果; 行数本身由浏览器半区每次操作时读取.
  * @param ctx - Host 插件上下文.
  * @param config - Loader 校验后的行配置, 缺省时使用 schema 默认值.
  */
