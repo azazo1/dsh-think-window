@@ -6,6 +6,7 @@ DeepSeek Harness Web 插件: 给对话里展开后的思维链块加上有限高
 
 - 折叠态仍是原生 Think 一行摘要.
 - 展开后正文限高 (默认 10 行), 超出部分在块内滚动, 内容不隐藏.
+- 块内滚到上下限后继续滚动会接着滚动外层会话, 不会被窗口卡住.
 - 流式输出时, 若滚动条贴着底部会自动跟随最新行; 上翻后暂停, 回到底部再恢复.
 - Settings > General 可调行数, `0` 表示不限高, 改动即时生效.
 
@@ -41,4 +42,6 @@ web 与 desktop 两个 profile 跑的是同一套 Web 应用, 桌面端只是多
 
 ## 实现
 
-插件不移动 React 拥有的对话行, 也不替换 `assistant-step` / `tool-call` 渲染. 限高通过稳定的 `[data-variant="think"]` 选择器加在原生展开体上.
+插件不移动 React 拥有的对话行, 也不替换 `assistant-step` / `tool-call` 渲染. 限高通过稳定的 `[data-variant="think"]` 选择器加在原生展开体上, 样式里不设 `overscroll-behavior`, 滚动链交给浏览器默认行为.
+
+样式标签带 `data-plugin` / `data-plugin-css` 标记, 与 DSH Client module system 的样式记账对齐; 卸载或热替换时插件在自己的 effect 里移除样式, 并清掉文档根上的限高属性与行数变量, 已展开的 Think 块随即回到原生显示.

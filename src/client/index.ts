@@ -14,7 +14,7 @@ import { startThinkFollow } from './follow.ts'
 import { en, NS, zh } from './locales.ts'
 import { ThinkWindowSettingsCard } from './settings-card.tsx'
 import { ThinkWindowSettingsForm } from './settings-form.ts'
-import { applyWindowLines, injectStyles } from './styles.ts'
+import { applyWindowLines, injectStyles, resetWindowLines } from './styles.ts'
 
 export const inject = ['slots', 'locale', 'configForms']
 
@@ -29,12 +29,12 @@ function liveLines(scope: ConfigForm<ThinkWindowSettings>): number {
  */
 export function apply(ctx: ClientContext): void {
   ctx.logger.info('dsh-think-window: client applying')
-  injectStyles()
 
   const scope = ctx.configForms.get<ThinkWindowSettings>(ENTRY_ID)
   ctx.effect(() => ctx.locale.register(NS, { zh, en }), 'dsh-think-window: dictionaries')
 
   ctx.effect(() => {
+    const removeStyles = injectStyles()
     const sync = (): void => {
       const lines = liveLines(scope)
       applyWindowLines(lines)
@@ -46,6 +46,9 @@ export function apply(ctx: ClientContext): void {
     return () => {
       unsub()
       stopFollow()
+      resetWindowLines()
+      removeStyles()
+      ctx.logger.info('dsh-think-window: client torn down, window cap removed')
     }
   }, 'dsh-think-window: window')
 

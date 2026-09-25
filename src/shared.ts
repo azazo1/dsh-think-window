@@ -22,11 +22,14 @@ export const MAX_LINES = 200
 /** 判断滚动是否贴着底部的像素余量. */
 export const FOLLOW_SLOP_PX = 32
 
-/** 注入样式的标记, 避免重复插入. */
+/** 注入样式的 id 标记, 避免重复插入. */
 export const STYLE_ATTR = 'data-plugin-css'
 
 /** 注入样式的 id. */
 export const STYLE_ID = 'dsh-think-window'
+
+/** 样式归属标记: DSH Client module system 按它回收插件样式. */
+export const PLUGIN_ATTR = 'data-plugin'
 
 /** 文档根上的限高开关属性. */
 export const CAPPED_ATTR = 'data-dsh-think-window-capped'
